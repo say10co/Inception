@@ -14,4 +14,8 @@ EXPOSE 443
 # this is equivalant to apt install nginx
 RUN apk update && apk upgrade && apk add --no-cache nginx
 
-# For debugging pupresses we run the 
+# For debugging pupresses 
+# nginx is been run on forground
+# using exec form 
+
+CMD ["nginx", "-g", "daemon off;"]
