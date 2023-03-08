@@ -7,12 +7,13 @@ services:
             context: .
             dockerfile: ./requirements/nginx/Dockerfile
         container_name: nginx-container
-#       depends_on:
-#           - wordpress
+        depends_on:
+           - wordpress
         ports:
             - "443:443"
         volumes:
-            -  /home/adriouic/Inception_42/simple_docker_nginx_html/public/html/:/var/www/
+          #-  /home/adriouic/Inception_42/simple_docker_nginx_html/public/html/:/var/www/
+            -  nginx-wp-volume:/var/www/wordpress
             - ./requirements/nginx/tools/:/etc/nginx/ssl/
             - ./requirements/nginx/conf/:/etc/nginx/http.d/
     mariadb:
@@ -31,3 +32,26 @@ services:
         ports:
           - "3306:3306"
         restart: always
+    
+    wordpress:
+      build:
+        context: .
+        dockerfile: ./requirements/wordpress/Dockerfile
+        args:
+            DB_NAME:            ${DB_NAME}
+            DB_USER_NAME:       ${DB_USER_NAME}
+            DB_USER_PASS:       ${DB_USER_PASS}
+      container_name: wordpress
+      depends_on: 
+        - mariadb
+      restart: always
+      volumes:
+            -  nginx-wp-volume:/var/www/
+        
+volumes:
+  nginx-wp-volume:
+    driver_opts:
+      type: none
+      o: bind
+      device: /home/$USER/data/
+  
