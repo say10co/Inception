@@ -12,8 +12,7 @@ services:
         ports:
             - "443:443"
         volumes:
-          #-  /home/adriouic/Inception_42/simple_docker_nginx_html/public/html/:/var/www/
-            -  nginx-wp-volume:/var/www/wordpress
+            -  nginx-wp-volume:/var/www/
             - ./requirements/nginx/tools/:/etc/nginx/ssl/
             - ./requirements/nginx/conf/:/etc/nginx/http.d/
     mariadb:
@@ -53,5 +52,5 @@ volumes:
     driver_opts:
       type: none
       o: bind
-      device: /home/$USER/data/
+      device: /home/$USER/data/wordpress
   
