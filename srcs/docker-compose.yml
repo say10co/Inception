@@ -11,9 +11,11 @@ services:
            - wordpress
         ports:
             - "443:443"
+        networks:
+           - inception-network
+
         volumes:
-          #-  /home/adriouic/Inception_42/simple_docker_nginx_html/public/html/:/var/www/
-            -  nginx-wp-volume:/var/www/wordpress
+            -  nginx-wp-volume:/var/www/
             - ./requirements/nginx/tools/:/etc/nginx/ssl/
             - ./requirements/nginx/conf/:/etc/nginx/http.d/
     mariadb:
@@ -31,6 +33,11 @@ services:
         container_name: mariadb
         ports:
           - "3306:3306"
+        networks:
+          - inception-network
+        volumes:
+          - mariadb-volume:/var/lib/mysql/
+
         restart: always
     
     wordpress:
@@ -45,13 +52,27 @@ services:
       depends_on: 
         - mariadb
       restart: always
+      networks:
+        - inception-network
       volumes:
-            -  nginx-wp-volume:/var/www/
+            - nginx-wp-volume:/var/www/
         
+# mariadb and wordpress 
+# # hosts directories should be created in Makefile
+#
 volumes:
+  mariadb-volume:
+    driver_opts:
+      type: none
+      o: bind
+      device: /home/$USER/data/mariadb
+
   nginx-wp-volume:
     driver_opts:
       type: none
       o: bind
-      device: /home/$USER/data/
+      device: /home/$USER/data/wordpress
   
+networks:
+  inception-network:
+    driver: bridge
