@@ -1,6 +1,10 @@
 FROM alpine:3.16
 
-ARG PHP_VERSION=8
+#adding arguments 
+ARG PHP_VERSION=8\
+	DB_NAME \
+	DB_USER_NAME\
+	DB_USER_PASS 
 
 RUN apk update && apk upgrade && apk add --no-cache wget unzip \
 	 php${PHP_VERSION} 	 \
@@ -14,8 +18,7 @@ WORKDIR /var/www
 COPY ./requirements/wordpress/conf/wp-config-create.sh .
 
 RUN wget https://wordpress.org/latest.zip	&& \
-			unzip latest.zip	
-RUN			sh wp-config-create.sh 	&& \
-			rm -rf wp-config-create.sh  latest.zip
+			unzip latest.zip	&& \
+			sh wp-config-create.sh && rm -rf wp-config-create.sh  latest.zip
 
 CMD ["/usr/sbin/php-fpm8", "-F"]

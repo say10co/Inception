@@ -9,8 +9,6 @@ RUN mkdir /var/run/mysqld nslookup; chmod 777 /var/run/mysqld
 
 #installing mariadb in /var/lib/mysql
 RUN mysql_install_db --user=mysql --datadir=/var/lib/mysql 
-#sed -i "s|skip-networking|skip-networking=0|g" \
-#/etc/my.cnf.d/mariadb-server.cnf 
 
 EXPOSE 3306
 

@@ -55,7 +55,7 @@ services:
       networks:
         - inception-network
       volumes:
-            - nginx-wp-volume:/var/www/
+            - nginx-wp-volume:/var/www/wordpress/
         
 # mariadb and wordpress 
 # # hosts directories should be created in Makefile
