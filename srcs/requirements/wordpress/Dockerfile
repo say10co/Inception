@@ -18,7 +18,7 @@ WORKDIR /var/www
 COPY ./requirements/wordpress/conf/wp-config-create.sh .
 
 RUN wget https://wordpress.org/latest.zip	&& \
-			unzip latest.zip	&& \
-			sh wp-config-create.sh && rm -rf wp-config-create.sh  latest.zip
+			unzip latest.zip && \
+			sh wp-config-create.sh && rm -rf wp-config-create.sh  latest.zip 
 
 CMD ["/usr/sbin/php-fpm8", "-F"]
