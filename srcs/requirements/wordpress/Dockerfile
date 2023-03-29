@@ -11,8 +11,20 @@ RUN	apk update && apk upgrade && apk add --no-cache wget unzip \
 	php${PHP_VERSION}-fpm    \
 	php${PHP_VERSION}-json	 \
 	php${PHP_VERSION}-mysqli \
+	php${PHP_VERSION}-dom \
+	php${PHP_VERSION}-exif \
+	php${PHP_VERSION}-fileinfo \
+	php${PHP_VERSION}-mbstring \
+	php${PHP_VERSION}-zip \
+	php${PHP_VERSION}-gd \
+	php${PHP_VERSION}-iconv \
+	php${PHP_VERSION}-intl  \
+	php${PHP_VERSION}-curl \
+	php${PHP_VERSION}-redis \
+	php${PHP_VERSION}-ctype \
 	&& sed -i 's/listen = 127.0.0.1:9000/listen = 9000/g'  /etc/php8/php-fpm.d/www.conf \
 	&& sed -i 's/nobody/www-data/g'  /etc/php8/php-fpm.d/www.conf ;
+
 
 RUN 	set -x && \
 	adduser -u 82 -D -G www-data www-data && \

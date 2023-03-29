@@ -56,7 +56,18 @@ services:
         - inception-network
       volumes:
             - nginx-wp-volume:/var/www/wordpress/
-        
+     
+    redis:
+      build:
+        context: .
+        dockerfile: ./requirements/bonus/redis/Dockerfile
+      container_name: redis
+      ports:
+       - "6379:6379"
+      networks:
+       - inception-network
+      restart: always
+    
 volumes:
   mariadb-volume:
     driver_opts:
