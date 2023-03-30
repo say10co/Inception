@@ -4,7 +4,8 @@ FROM alpine:3.16
 ARG	PHP_VERSION=8\
 	DB_NAME \
 	DB_USER_NAME\
-	DB_USER_PASS 
+	DB_USER_PASS \
+	REDIS_PASS
 
 RUN	apk update && apk upgrade && apk add --no-cache wget unzip \
 	php${PHP_VERSION} 	 \

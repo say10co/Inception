@@ -11,6 +11,7 @@ define( 'DB_CHARSET', 'utf8' );
 define( 'DB_COLLATE', '' );
 define('WP_REDIS_HOST', 'redis');
 define('WP_REDIS_PORT', '6379');
+define( 'WP_REDIS_PASSWORD', '${REDIS_PASS}' );
 \$table_prefix = 'wp_';
 define( 'WP_DEBUG', false );
 if ( ! defined( 'ABSPATH' ) ) {

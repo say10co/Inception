@@ -48,6 +48,7 @@ services:
             DB_NAME:            ${DB_NAME}
             DB_USER_NAME:       ${DB_USER_NAME}
             DB_USER_PASS:       ${DB_USER_PASS}
+            REDIS_PASS:         ${REDIS_PASS}
       container_name: wordpress
       depends_on: 
         - mariadb
@@ -61,6 +62,8 @@ services:
       build:
         context: .
         dockerfile: ./requirements/bonus/redis/Dockerfile
+        args:
+          REDIS_PASS:         ${REDIS_PASS}
       container_name: redis
       ports:
        - "6379:6379"
