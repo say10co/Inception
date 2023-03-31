@@ -10,11 +10,14 @@ RUN mkdir -p ${FTP_HOME_DIR} && addgroup ${FTP_GROUP} \
 
 RUN echo "${FTP_USER}:${FTP_PASS}" | /usr/sbin/chpasswd
 
+COPY add.sh . 
 RUN apk update \
 	&& apk add --no-cache vsftpd \
 	&& echo 'seccomp_sandbox=NO' >> /etc/vsftpd/vsftpd.conf \
-	&& sed -i "s/^#local_enable=YES/local_enable=YES$/" /etc/vsftpd/vsftpd.conf \
-	&& sed -i "s/^anonymous_enable=YES$/anonymous_enable=NO/" /etc/vsftpd/vsftpd.conf 
+	&& sed -i "s/^anonymous_enable=YES$/anonymous_enable=NO/" /etc/vsftpd/vsftpd.conf \
+	&& sed -i "s/^#local_enable=YES$/local_enable=YES/" /etc/vsftpd/vsftpd.conf \
+	&& sed -i "s/^#write_enable=YES$/write_enable=YES/" /etc/vsftpd/vsftpd.conf
+
 
 EXPOSE 21
 
