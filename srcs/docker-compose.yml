@@ -70,6 +70,24 @@ services:
       networks:
        - inception-network
       restart: always
+
+    ftp:
+      build:
+        context: .
+        dockerfile: ./requirements/bonus/vsftpd/Dockerfile
+        args:
+          FTP_USER: ${FTP_USER}
+          FTP_PASS: ${FTP_PASS}
+          FTP_GROUP: ${FTP_GROUP}
+          FTP_HOME_DIR: ${FTP_HOME_DIR}
+      container_name: ftp
+      ports:
+          - "21:21"
+      volumes: 
+          - nginx-wp-volume:/var/www/wordpress
+      networks:
+          - inception-network
+            #restart: always
     
 volumes:
   mariadb-volume:
