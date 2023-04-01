@@ -83,11 +83,13 @@ services:
       container_name: ftp
       ports:
           - "21:21"
+          - "20:20"
+          - "3000-3010:3000-3010"
       volumes: 
           - nginx-wp-volume:/var/www/wordpress
       networks:
           - inception-network
-      restart: always
+            #restart: always
     
 volumes:
   mariadb-volume:
