@@ -4,7 +4,8 @@ create="--CREATE"
 delete="--DELETE"
 
 if [ "$1"  = "$create" ] && [ ! -d /home/${USER}/data ];then
-	mkdir -p ~/data/{wordpress,mariadb}
+	mkdir -p ~/data/mariadb
+	mkdir ~/data/wordpress
 
 elif  [ "$1" = "$delete" ]; then
 

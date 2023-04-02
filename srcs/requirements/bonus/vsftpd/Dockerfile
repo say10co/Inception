@@ -15,13 +15,18 @@ RUN echo "${FTP_USER}:${FTP_PASS}" | /usr/sbin/chpasswd
 
 RUN apk update \
 	&& apk add --no-cache vsftpd \
-	&& echo 'seccomp_sandbox=NO' >> /etc/vsftpd/vsftpd.conf \
+	&& sed -i 's/^LISTEN=YES$/#LISTEN=YES/'  /etc/vsftpd/vsftpd.conf \
 	&& sed -i "s/^anonymous_enable=YES$/anonymous_enable=NO/" /etc/vsftpd/vsftpd.conf \
 	&& sed -i "s/^#local_enable=YES$/local_enable=YES/" /etc/vsftpd/vsftpd.conf \
 	&& sed -i "s/^#write_enable=YES$/write_enable=YES/" /etc/vsftpd/vsftpd.conf \
+	&& sed -i "s/^#chroot_local_user=YES$/chroot_local_user=YES/" /etc/vsftpd/vsftpd.conf \
+	&& echo "local_root=${FTP_HOME_DIR}" >> /etc/vsftpd/vsftpd.conf \
+	&& echo "allow_writeable_chroot=YES" >> /etc/vsftpd/vsftpd.conf \
 	&& echo "pasv_enable=YES" >> /etc/vsftpd/vsftpd.conf \
 	&& echo "pasv_min_port=30000" >> /etc/vsftpd/vsftpd.conf \
-	&& echo "pasv_max_port=30010" >> /etc/vsftpd/vsftpd.conf 
+	&& echo "pasv_max_port=30010" >> /etc/vsftpd/vsftpd.conf  \
+	&& echo 'seccomp_sandbox=NO' >> /etc/vsftpd/vsftpd.conf 
+	
 	#&& echo "cmds_allowed=all" >> /etc/vsftpd/vsftpd.conf 
 
 

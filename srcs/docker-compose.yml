@@ -89,7 +89,7 @@ services:
           - nginx-wp-volume:/var/www/wordpress
       networks:
           - inception-network
-            #restart: always
+      restart: always
     
 volumes:
   mariadb-volume:

@@ -30,7 +30,7 @@ RUN	apk update && apk upgrade && apk add --no-cache wget unzip \
 RUN 	set -x && \
 	adduser -u 82 -D -G www-data www-data && \
 	chown -R www-data:www-data /var/log/php8 && \
-	chmod -R 777 /var/log/php8
+	chmod -R 700 /var/log/php8
 
 WORKDIR /var/www
 
@@ -38,7 +38,7 @@ COPY 	./requirements/wordpress/conf/wp-config-create.sh .
 
 RUN	wget https://wordpress.org/latest.zip \
 	&& unzip latest.zip \
-	&& chown -R www-data:www-data ./wordpress/ && chmod 777 ./wordpress/ \
+	&& chown -R www-data:www-data ./wordpress/ && chmod 600 ./wordpress/ \
 	&& sh wp-config-create.sh && rm -rf wp-config-create.sh  latest.zip 
 			
 USER www-data
