@@ -90,6 +90,17 @@ services:
       networks:
           - inception-network
       restart: always
+
+    adminer:
+      build:
+        context: . 
+        dockerfile : ./requirements/bonus/Adminer/Dockerfile
+      ports:
+        - "8080:8080"
+      networks: 
+        - inception-network 
+      restart: always
+
     
 volumes:
   mariadb-volume:

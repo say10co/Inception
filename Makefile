@@ -44,8 +44,7 @@ clean: down
 	#docker network rm $(network_name)
 	#docker volume rm $(volumes)
 	#sudo ./$(make_dir_path) --DELETE
-	sudo rm -rf ~/data/wordpress/*
-	sudo rm -rf ~/data/mariadb/*
+	sudo rm -rf ~/data
 
 fclean:  clean
 	@printf "$(COLOUR_RED) Removimg all unused images no confirmation needed! \n $(COLOUR_END)"
