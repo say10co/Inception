@@ -101,6 +101,16 @@ services:
         - inception-network 
       restart: always
 
+    ssite:
+      build:
+        context: ./requirements/bonus/Static-Site
+        dockerfile: ./Dockerfile
+      container_name: ssite
+      ports:
+        - "80:80"
+      volumes:
+        - site-volume:/var/www/html
+      restart: always 
     
 volumes:
   mariadb-volume:
@@ -114,6 +124,12 @@ volumes:
       type: none
       o: bind
       device: /home/$USER/data/wordpress
+
+  site-volume:
+    driver_opts:
+      type: none
+      o: bind
+      device: /home/$USER/data/Static-Site
   
 networks:
   inception-network:
