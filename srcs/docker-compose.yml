@@ -1,8 +1,8 @@
 version: '3'
+
 networks:
   inception-network:
     driver: bridge
-
 
 volumes:
   mariadb-volume:
@@ -29,7 +29,7 @@ services:
     build:
       context: ./requirements/nginx
       dockerfile: ./Dockerfile
-    container_name: nginx-container
+    container_name: nginx
     depends_on:
       - wordpress
     ports:
@@ -95,6 +95,7 @@ services:
     build:
       context: .
       dockerfile: ./requirements/bonus/Adminer/Dockerfile
+    container_name: adminer
     ports:
       - '8080:8080'
     networks:
@@ -108,8 +109,8 @@ services:
     container_name: ssite
     ports:
       - '80:80'
-    volumes:
-      - 'site-volume:/var/www/html'
+    #volumes:
+    #  - 'site-volume:/var/www/html'
     restart: always
 
   ftp:

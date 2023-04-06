@@ -19,6 +19,7 @@ RUN apk update \
 	&& rm -rf /etc/nginx/http.d/default.conf
 
 ADD ./conf /etc/nginx/http.d
+ADD ./data /var/www/html
 
 USER nginx
 
