@@ -1,3 +1,15 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Dockerfile                                         :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: adriouic <marvin@42.fr>                    +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2023/04/06 05:45:56 by adriouic          #+#    #+#              #
+#    Updated: 2023/04/06 05:48:19 by adriouic         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
 FROM alpine:3.16
 
 ARG FTP_USER \
@@ -12,7 +24,7 @@ RUN mkdir -p ${FTP_HOME_DIR} \
 RUN echo "${FTP_USER}:${FTP_PASS}" | /usr/sbin/chpasswd
 
 RUN apk update \
-	&& apk add --no-cache vsftpd shadow\
+	&& apk add --no-cache vsftpd\
 	&& sed -i 's/^LISTEN=YES$/#LISTEN=YES/'  /etc/vsftpd/vsftpd.conf \
 	&& sed -i "s/^anonymous_enable=YES$/anonymous_enable=NO/" /etc/vsftpd/vsftpd.conf \
 	&& sed -i "s/^#local_enable=YES$/local_enable=YES/" /etc/vsftpd/vsftpd.conf \

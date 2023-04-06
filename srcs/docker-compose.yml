@@ -1,117 +1,9 @@
-# Syntax Version
 version: '3'
+networks:
+  inception-network:
+    driver: bridge
 
-services:
-    nginx:
-        build:
-            context: ./requirements/nginx
-            dockerfile: ./Dockerfile
-        container_name: nginx-container
-        depends_on:
-           - wordpress
-        ports:
-            - "443:443"
-        networks:
-           - inception-network
 
-        volumes:
-            -  nginx-wp-volume:/var/www/wordpress
-              #- ./requirements/nginx/tools/:/etc/nginx/ssl/
-              #- ./requirements/nginx/conf/:/etc/nginx/http.d/
-    mariadb:
-        build:
-          context: .
-          dockerfile: ./requirements/mariadb/Dockerfile
-          args:
-            DB_NAME:            ${DB_NAME}
-            DB_USER_PASS:       ${DB_USER_PASS}
-            DB_USER_NAME:       ${DB_USER_NAME}
-            DB_ROOT:            ${DB_ROOT}
-            DB_ROOT_PASS:       ${DB_ROOT_PASS}
-            DB_MYSQL:           ${DB_MYSQL}
-            DB_MYSQL_PASS:      ${DB_MYSQL_PASS}
-        container_name: mariadb
-        ports:
-          - "3306:3306"
-        networks:
-          - inception-network
-        volumes:
-          - mariadb-volume:/var/lib/mysql/
-
-        restart: always
-    
-    wordpress:
-      build:
-        context: .
-        dockerfile: ./requirements/wordpress/Dockerfile
-        args:
-            DB_NAME:            ${DB_NAME}
-            DB_USER_NAME:       ${DB_USER_NAME}
-            DB_USER_PASS:       ${DB_USER_PASS}
-            REDIS_PASS:         ${REDIS_PASS}
-      container_name: wordpress
-      depends_on: 
-        - mariadb
-      restart: always
-      networks:
-        - inception-network
-      volumes:
-            - nginx-wp-volume:/var/www/wordpress/
-     
-    redis:
-      build:
-        context: .
-        dockerfile: ./requirements/bonus/redis/Dockerfile
-        args:
-          REDIS_PASS:         ${REDIS_PASS}
-      container_name: redis
-      ports:
-       - "6379:6379"
-      networks:
-       - inception-network
-      restart: always
-
-    ftp:
-      build:
-        context: .
-        dockerfile: ./requirements/bonus/vsftpd/Dockerfile
-        args:
-          FTP_USER: ${FTP_USER}
-          FTP_PASS: ${FTP_PASS}
-          FTP_GROUP: ${FTP_GROUP}
-          FTP_HOME_DIR: ${FTP_HOME_DIR}
-      container_name: ftp
-      ports:
-          - "21:21"
-          - "20:20"
-          - "3000-3010:3000-3010"
-      volumes: 
-          - nginx-wp-volume:/var/www/wordpress
-      networks:
-          - inception-network
-      restart: always
-
-    adminer:
-      build:
-        context: . 
-        dockerfile : ./requirements/bonus/Adminer/Dockerfile
-      ports:
-        - "8080:8080"
-      networks: 
-        - inception-network 
-      restart: always
-
-    ssite:
-      build:
-        context: ./requirements/bonus/Static-Site
-        dockerfile: ./Dockerfile
-      container_name: ssite
-      ports:
-        - "80:80"
-      volumes:
-        - site-volume:/var/www/html
-      restart: always 
-    
 volumes:
   mariadb-volume:
     driver_opts:
@@ -130,7 +22,113 @@ volumes:
       type: none
       o: bind
       device: /home/$USER/data/Static-Site
-  
-networks:
-  inception-network:
-    driver: bridge
+
+
+services:
+  nginx:
+    build:
+      context: ./requirements/nginx
+      dockerfile: ./Dockerfile
+    container_name: nginx-container
+    depends_on:
+      - wordpress
+    ports:
+      - '443:443'
+    networks:
+      - inception-network
+    volumes:
+      - 'nginx-wp-volume:/var/www/wordpress'
+
+  mariadb:
+    build:
+      context: .
+      dockerfile: ./requirements/mariadb/Dockerfile
+      args:
+        DB_NAME: '${DB_NAME}'
+        DB_USER_PASS: '${DB_USER_PASS}'
+        DB_USER_NAME: '${DB_USER_NAME}'
+        DB_ROOT: '${DB_ROOT}'
+        DB_ROOT_PASS: '${DB_ROOT_PASS}'
+        DB_MYSQL: '${DB_MYSQL}'
+        DB_MYSQL_PASS: '${DB_MYSQL_PASS}'
+    container_name: mariadb
+    ports:
+      - '3306:3306'
+    networks:
+      - inception-network
+    volumes:
+      - 'mariadb-volume:/var/lib/mysql/'
+    restart: always
+
+  wordpress:
+    build:
+      context: .
+      dockerfile: ./requirements/wordpress/Dockerfile
+      args:
+        DB_NAME: '${DB_NAME}'
+        DB_USER_NAME: '${DB_USER_NAME}'
+        DB_USER_PASS: '${DB_USER_PASS}'
+        REDIS_PASS: '${REDIS_PASS}'
+    container_name: wordpress
+    depends_on:
+      - mariadb
+    restart: always
+    networks:
+      - inception-network
+    volumes:
+      - 'nginx-wp-volume:/var/www/wordpress/'
+
+  redis:
+    build:
+      context: .
+      dockerfile: ./requirements/bonus/redis/Dockerfile
+      args:
+        REDIS_PASS: '${REDIS_PASS}'
+    container_name: redis
+    ports:
+      - '6379:6379'
+    networks:
+      - inception-network
+    restart: always
+    
+  adminer:
+    build:
+      context: .
+      dockerfile: ./requirements/bonus/Adminer/Dockerfile
+    ports:
+      - '8080:8080'
+    networks:
+      - inception-network
+    restart: always
+
+  ssite:
+    build:
+      context: ./requirements/bonus/Static-Site
+      dockerfile: ./Dockerfile
+    container_name: ssite
+    ports:
+      - '80:80'
+    volumes:
+      - 'site-volume:/var/www/html'
+    restart: always
+
+  ftp:
+    build:
+      context: .
+      dockerfile: ./requirements/bonus/vsftpd/Dockerfile
+      args:
+        FTP_USER: '${FTP_USER}'
+        FTP_PASS: '${FTP_PASS}'
+        FTP_GROUP: '${FTP_GROUP}'
+        FTP_HOME_DIR: '${FTP_HOME_DIR}'
+    container_name: ftp
+    ports:
+      - '21:21'
+      - '20:20'
+      - '3000-3010:3000-3010'
+    volumes:
+      - 'nginx-wp-volume:/var/www/wordpress'
+    networks:
+      - inception-network
+    restart: always
+

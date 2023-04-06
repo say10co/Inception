@@ -1,5 +1,16 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    create_db.sh                                       :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: adriouic <marvin@42.fr>                    +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2023/04/06 05:38:13 by adriouic          #+#    #+#              #
+#    Updated: 2023/04/06 05:38:42 by adriouic         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
 
-# if the wordpress-db does not exist, creat it !
+# if the wordpress-db does not exist, else creat it !
 if [ ! -d "/var/lib/mysql/wordpress" ]; then
 
 /usr/bin/mysqld --user=mysql --bootstrap << EOF 

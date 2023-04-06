@@ -1,28 +1,23 @@
-#specifying which image we want to deploy
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Dockerfile                                         :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: adriouic <marvin@42.fr>                    +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2023/04/06 05:36:36 by adriouic          #+#    #+#              #
+#    Updated: 2023/04/06 05:36:46 by adriouic         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
 FROM alpine:3.17
 
-# this does not open the port 443
-# it documets for the  reader that it's using the port 
-# if the option -P is used then docker will publish all expoed ports
 EXPOSE 443
 
-# not that apK is used instrad of apt 
-# this is  lightweight file manager for alpine
-# remember the 53.2 MB :)
-
-# creatign system user and add it to www-data group
-#RUN chown -R nginx:www-datat /var/www && chmod 750 /var/www 
-
-# installing nginx
-# this is equivalant to apt install nginx
 RUN apk update && apk upgrade && apk add --no-cache nginx
 
 ADD ./tools /etc/nginx/ssl
 ADD ./conf /etc/nginx/http.d
-
-# For debugging pupresses 
-# nginx is been run on forground
-# using exec form 
 
 USER nginx 
 

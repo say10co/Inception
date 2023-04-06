@@ -1,6 +1,19 @@
-#!/bin/sh
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    wp-config-create.sh                                :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: adriouic <marvin@42.fr>                    +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2023/04/06 05:42:29 by adriouic          #+#    #+#              #
+#    Updated: 2023/04/06 05:43:44 by adriouic         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
 # This mihgt be bad, but it works 
 if [ ! -f "/var/www/wordpress/wp-config.php" ]; then
+
+# Append (-a) these changes to wp-config 
 tee -a  /var/www/wordpress/wp-config.php  << EOF
 <?php
 define( 'DB_NAME', '${DB_NAME}' );
@@ -21,10 +34,3 @@ require_once ABSPATH . 'wp-settings.php';
 EOF
 
 fi
-
-#sed -i "s/database_name_here/$DB_NAME/g" /var/www/wordpress/wp-config-sample.php
-#sed -i "s/username_here/$DB_USER_NAME/g" /var/www/wordpress/wp-config-sample.php
-#sed -i "s/password_here/$DB_USER_PASS/g" /var/www/wordpress/wp-config-sample.php
-#sed -i "s/localhost/mariadb/g" /var/www/wordpress/wp-config-sample.php
-#cp /var/www/wordpress/wp-config-sample.php /var/www/wordpress/wp-config.php
-
