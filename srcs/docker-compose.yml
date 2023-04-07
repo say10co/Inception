@@ -23,6 +23,12 @@ volumes:
       o: bind
       device: /home/$USER/data/Static-Site
 
+  portainer-volume:
+    driver_opts:
+      type: none
+      o: bind
+      device: /home/$USER/data/portainer-data
+
 
 services:
   nginx:
@@ -141,6 +147,7 @@ services:
     ports:
       -  '9443:9443'
     volumes:
+      - 'portainer-volume:/data'
       - '/var/run/docker.sock:/var/run/docker.sock'
     restart: always
 
