@@ -6,6 +6,7 @@ delete="--DELETE"
 if [ "$1"  = "$create" ] && [ ! -d /home/${USER}/data ];then
 	mkdir -p ~/data/mariadb
 	mkdir ~/data/wordpress
+	mkdir ~/data/Portainer-data
 
 elif  [ "$1" = "$delete" ]; then
 

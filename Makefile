@@ -13,7 +13,9 @@ COLOUR_END=\033[0m
 
 
 network_name=srcs_inception-network
-volumes = nginx-wp-volume mariadb-volume
+#volumes = nginx-wp-volume mariadb-volume portainer-volume srcs_portainer-volume srcs_site-volume
+volume = "$(shell docker volume ls | sed  's/^local *//' | grep s | tr '\n'  ' ')" 
+
 build_log_path=/tmp/docker-build.log 
 
 up:
@@ -41,12 +43,12 @@ down:
 	docker-compose --file $(yaml_file_path) --env-file $(env_file_path) down
 
 clean: down
-	#docker network rm $(network_name)
-	#docker volume rm $(volumes)
+	docker network rm $(network_name)
+	docker volume rm $(volumes)
 	#sudo ./$(make_dir_path) --DELETE
-	sudo rm -rf ~/data
+	sudo rm -rf ~/data/wordpress 
 
-fclean:  clean
+fclean:  
 	@printf "$(COLOUR_RED) Removimg all unused images no confirmation needed! \n $(COLOUR_END)"
 	docker system prune --all --volumes --force
 	docker network prune --force
