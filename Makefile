@@ -47,7 +47,7 @@ clean: down
 	docker volume rm $(volumes)
 	#sudo ./$(make_dir_path) --DELETE
 
-fclean:  
+fclean: down 
 	@printf "$(COLOUR_RED) Removimg all unused images no confirmation needed! \n $(COLOUR_END)"
 	docker system prune --all --volumes --force
 	docker network prune --force
