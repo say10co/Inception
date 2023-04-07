@@ -46,13 +46,13 @@ clean: down
 	docker network rm $(network_name)
 	docker volume rm $(volumes)
 	#sudo ./$(make_dir_path) --DELETE
-	sudo rm -rf ~/data/wordpress 
 
 fclean:  
 	@printf "$(COLOUR_RED) Removimg all unused images no confirmation needed! \n $(COLOUR_END)"
 	docker system prune --all --volumes --force
 	docker network prune --force
 	docker volume prune --force
+	sudo rm -rf ~/data/wordpress/*
 logs:
 	@printf "$(COLOUR_BLUE) ***mariadb*** Container logs ...\n $(COLOUR_END)"
 	docker logs --timestamps $(mariadb)
