@@ -12,17 +12,6 @@
 
 FROM alpine:3.17
 
-RUN apk update && apk add --no-cache mariadb mariadb-client
-
-#setting socket folder for mariadb
-RUN mkdir /var/run/mysqld nslookup; chmod 777 /var/run/mysqld
-
-RUN mysql_install_db --user=mysql --datadir=/var/lib/mysql 
-
-EXPOSE 3306
-
-COPY requirements/mariadb/conf/create_db.sh . 
-
 # build time env
 ARG	DB_NAME       \ 	
 	DB_USER_PASS  \   
@@ -31,6 +20,18 @@ ARG	DB_NAME       \
 	DB_ROOT_PASS  \   
 	DB_MYSQL      \   
 	DB_MYSQL_PASS 
+
+RUN apk update && apk add --no-cache mariadb mariadb-client
+
+#setting socket folder for mariadb
+RUN mkdir /var/run/mysqld nslookup; chmod 777 /var/run/mysqld
+
+RUN mysql_install_db --user=$DB_MYSQL --datadir=/var/lib/mysql 
+
+EXPOSE 3306
+
+COPY requirements/mariadb/conf/create_db.sh . 
+#ADD ../tools/mariadb-dump.sql /var/lib/mysql
 
 # create  databse 
 RUN sh create_db.sh && rm -rf create_db.sh

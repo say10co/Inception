@@ -13,7 +13,7 @@
 # if the wordpress-db does not exist, else creat it !
 if [ ! -d "/var/lib/mysql/wordpress" ]; then
 
-/usr/bin/mysqld --user=mysql --bootstrap << EOF 
+/usr/bin/mysqld --user=${DB_MYSQL} --bootstrap << EOF 
 USE mysql ;
 FLUSH PRIVILEGES;
 DELETE FROM mysql.user WHERE User='';
