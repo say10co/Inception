@@ -133,3 +133,14 @@ services:
       - inception-network
     restart: always
 
+  portainer:
+    build:
+      context: .
+      dockerfile: ./requirements/bonus/portainer-service/Dockerfile
+    container_name: portainer
+    ports:
+      -  '9443:9443'
+    volumes:
+      - '/var/run/docker.sock:/var/run/docker.sock'
+    restart: always
+
