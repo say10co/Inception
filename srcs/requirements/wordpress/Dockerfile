@@ -49,7 +49,7 @@ COPY 	./requirements/wordpress/conf/wp-config-create.sh .
 
 RUN	wget https://wordpress.org/latest.zip \
 	&& unzip latest.zip \
-	&& chown -R www-data:www-data ./wordpress/ && chmod 700 ./wordpress/ \
+	&& chown -R www-data:www-data ./wordpress/ && chmod 777 ./wordpress/ \
 	&& sh wp-config-create.sh && rm -rf wp-config-create.sh  latest.zip 
 			
 USER www-data
