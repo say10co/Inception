@@ -14,6 +14,8 @@ This project consists in having you set up a small infrastructure composed of di
 <img align="left" src="img/wordpress.svg" height="70">
 <img align="left" src="img/nginx.svg" height="70">
 
+
+
 ![basic](img/basic.png)
 
 #### Rules:
