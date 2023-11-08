@@ -15,6 +15,9 @@ This project consists in having you set up a small infrastructure composed of di
 <img align="left" src="img/nginx.svg" height="70">
 
 
+
+![basic](img/basic.png)
+
 #### Rules:
 - This project need to be done on a Virtual Machine.
 - All the files required for the configuration of your project must be placed in a `srcs` folder.
@@ -61,5 +64,3 @@ A `Dockerfile` must be written for each extra service. Thus, each one of them wi
 - Set up `Adminer`.
 - Set up a service of your choice that you think is useful. During the defense, you
 will have to justify your choice.
-
-![basic](img/basic.png)
